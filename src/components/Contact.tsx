@@ -146,7 +146,7 @@ export default function Contact(): JSX.Element {
   };
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-sky-600">
+    <section id="contact" className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-sky-600">
       {/* Static Stars Background - Same as Projects */}
       <div className="absolute inset-0 pointer-events-none">
         {staticStars.map((star) => (
@@ -205,14 +205,14 @@ export default function Contact(): JSX.Element {
         >
           <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 max-w-4xl mx-auto">
             <div className="flex items-center justify-center gap-3 mb-6">
-              <MessageCircle className="w-8 h-8 text-cyan-400 animate-bounce" />
+              <MessageCircle className="w-8 h-8 text-cyan-400" />
               <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight">
                 Let&apos;s{' '}
-                <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-pulse">
+                <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
                   Connect
                 </span>
               </h2>
-              <Sparkles className="w-8 h-8 text-purple-400 animate-spin" style={{ animationDuration: '3s' }} />
+              <Sparkles className="w-8 h-8 text-purple-400" style={{ animationDuration: '3s' }} />
             </div>
             
             <p className="text-sky-100 text-xl max-w-3xl mx-auto leading-relaxed mb-6">
@@ -220,7 +220,7 @@ export default function Contact(): JSX.Element {
             </p>
 
             <div className="flex justify-center">
-              <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
+              <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
             </div>
           </div>
         </div>
@@ -237,7 +237,7 @@ export default function Contact(): JSX.Element {
           >
             <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 h-full">
               <div className="flex items-center gap-3 mb-8">
-                <Rocket className="w-7 h-7 text-cyan-400 animate-bounce" />
+                <Rocket className="w-7 h-7 text-cyan-400" />
                 <h3 className="text-3xl font-bold text-white">
                   Mission Control
                 </h3>
@@ -278,10 +278,10 @@ export default function Contact(): JSX.Element {
               {/* Floating Elements */}
               <div className="relative mt-8">
                 <div className="absolute -top-2 -left-2 w-6 h-6 opacity-20">
-                  <Sparkles className="w-full h-full text-cyan-400 animate-pulse" />
+                  <Sparkles className="w-full h-full text-cyan-400" />
                 </div>
                 <div className="absolute -bottom-2 -right-2 w-4 h-4 opacity-30">
-                  <Star className="w-full h-full text-purple-400 animate-bounce" />
+                  <Star className="w-full h-full text-purple-400" />
                 </div>
               </div>
             </div>
@@ -298,7 +298,7 @@ export default function Contact(): JSX.Element {
           >
             <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 h-full">
               <div className="flex items-center gap-3 mb-8">
-                <Send className="w-7 h-7 text-purple-400 animate-pulse" />
+                <Send className="w-7 h-7 text-purple-400" />
                 <h3 className="text-3xl font-bold text-white">
                   Send Transmission
                 </h3>
@@ -392,7 +392,7 @@ export default function Contact(): JSX.Element {
 
               {/* Corner Sparkle Effect */}
               <div className="absolute top-4 right-4 w-6 h-6 opacity-30">
-                <Sparkles className="w-full h-full text-pink-400 animate-spin" style={{ animationDuration: '4s' }} />
+                <Sparkles className="w-full h-full text-pink-400"/>
               </div>
             </div>
           </div>

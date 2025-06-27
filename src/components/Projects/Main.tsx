@@ -50,7 +50,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-gradient-to-t from-gray-900 via-blue-900 to-black">
+    <section id="projects" className="min-h-screen relative overflow-hidden bg-gradient-to-t from-gray-900 via-blue-900 to-black">
       <StarBackground />
 
       {/* Main Content */}

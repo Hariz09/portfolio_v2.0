@@ -123,28 +123,6 @@ export const aboutData: AboutData = {
       relatedTech: ['C++', 'Python', 'Java', 'Algorithms', 'Data Structures']
     },
     { 
-      name: 'Python & FastAPI', 
-      level: 'Advanced', 
-      icon: 'logos:python', 
-      percentage: 80,
-      category: 'backend',
-      description: "Proficient in Python development with FastAPI for building high-performance APIs and data processing applications.",
-      subSkills: [
-        { name: 'FastAPI Development', level: 'Advanced' },
-        { name: 'Async Programming', level: 'Advanced' },
-        { name: 'Data Processing', level: 'Intermediate' },
-        { name: 'Machine Learning', level: 'Beginner' },
-        { name: 'Web Scraping', level: 'Intermediate' }
-      ],
-      experience: [
-        'Built 5+ FastAPI applications with automatic documentation',
-        'Processed datasets with 100K+ records using Pandas',
-        'Implemented async endpoints serving 500+ concurrent requests',
-        'Created data pipelines for real-time analytics'
-      ],
-      relatedTech: ['FastAPI', 'Pandas', 'NumPy', 'SQLAlchemy', 'Pydantic', 'Asyncio', 'BeautifulSoup']
-    },
-    { 
       name: 'UI/UX Design', 
       level: 'Intermediate', 
       icon: 'mdi:palette', 
@@ -177,38 +155,13 @@ export const aboutData: AboutData = {
         { name: 'EC2 & Load Balancing', level: 'Intermediate' },
         { name: 'S3 & CloudFront', level: 'Advanced' },
         { name: 'Lambda Functions', level: 'Intermediate' },
-        { name: 'RDS & DynamoDB', level: 'Beginner' },
-        { name: 'CI/CD Pipelines', level: 'Intermediate' }
       ],
       experience: [
-        'Deployed 8+ applications on AWS infrastructure',
-        'Set up CI/CD pipelines reducing deployment time by 60%',
-        'Managed cloud costs saving 30% through optimization',
+        'Deployed application on AWS infrastructure',
         'Implemented auto-scaling for applications handling traffic spikes'
       ],
-      relatedTech: ['AWS EC2', 'AWS S3', 'AWS Lambda', 'Docker', 'GitHub Actions', 'Terraform', 'Nginx']
+      relatedTech: ['AWS EC2', 'AWS S3', 'AWS Lambda', 'GitHub Actions']
     },
-    { 
-      name: 'React Native', 
-      level: 'Beginner', 
-      icon: 'mdi:cellphone', 
-      percentage: 65,
-      category: 'mobile',
-      description: "Learning mobile development with React Native, focusing on cross-platform app development and native integrations.",
-      subSkills: [
-        { name: 'Cross-platform Development', level: 'Beginner' },
-        { name: 'Native Modules', level: 'Beginner' },
-        { name: 'App Store Deployment', level: 'Beginner' },
-        { name: 'Push Notifications', level: 'Beginner' }
-      ],
-      experience: [
-        'Built 2 mobile applications with React Native',
-        'Integrated native device features like camera and GPS',
-        'Published 1 app to Google Play Store',
-        'Currently learning iOS development and App Store guidelines'
-      ],
-      relatedTech: ['React Native', 'Expo', 'React Navigation', 'Native Base', 'Firebase', 'Android Studio']
-    }
   ],
   
   stats: [

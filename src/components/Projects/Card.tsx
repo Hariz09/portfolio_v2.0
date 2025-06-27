@@ -98,14 +98,6 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
           
           {/* Enhanced Glow Effect */}
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-          
-          {/* Featured Badge */}
-          {project.featured && (
-            <div className="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full text-xs font-bold text-slate-900 shadow-lg">
-              <Star className="w-3 h-3 fill-current" />
-              FEATURED
-            </div>
-          )}
 
           {/* Constellation Lines Effect */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-700">
@@ -120,6 +112,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
             <Image
               src={project.image}
               alt={project.title}
+              fill
               className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/60 to-slate-900/20"></div>

@@ -290,7 +290,7 @@ export default function Hero(): JSX.Element {
               >
                 I build complete digital solutions, from front-end user
                 experiences to back-end systems. Let&apos;s create something
-                extraordinary together.
+                extraordinary together!
                 <span className="absolute -inset-2 bg-gradient-to-r from-slate-300/10 via-slate-200/10 to-slate-300/10 rounded-xl blur-md opacity-0 hover:opacity-100 transition-opacity duration-500 -z-10"></span>
               </p>
             </div>
