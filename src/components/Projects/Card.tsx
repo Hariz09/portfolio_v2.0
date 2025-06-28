@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { Github, Star, Sparkles, Rocket, ExternalLink, FileText } from 'lucide-react';
+import { Github, Sparkles, Rocket, ExternalLink, FileText } from 'lucide-react';
 import { Project, AnimationStyle } from '@/types/project';
 import Image from 'next/image';
 

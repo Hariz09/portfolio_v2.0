@@ -1,7 +1,69 @@
 'use client'
-import React, { useState, useEffect, useRef, JSX } from 'react';
-import { Mail, Linkedin, Github, Send, MessageCircle, Sparkles, Star, Rocket, Phone } from 'lucide-react';
-import { ShootingStar, StaticStar } from '@/types/project';
+import React, { useState, useEffect, useRef, JSX, Suspense } from 'react';
+import { Canvas, useFrame, useLoader, ThreeElements } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import * as THREE from 'three';
+import { Mail, Linkedin, Github, Send, MessageCircle, Sparkles, Star, Rocket, Phone, Globe, Zap, Satellite } from 'lucide-react';
+
+// Earth Component
+type MeshProps = ThreeElements['mesh'];
+
+function RotatingEarth(props: MeshProps) {
+  const meshRef = useRef<THREE.Mesh>(null!);
+  const texture = useLoader(THREE.TextureLoader, '/world.jpg');
+
+  useFrame((_, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += delta * 0.2;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} {...props}>
+      <sphereGeometry args={[1.5, 64, 64]} />
+      <meshBasicMaterial map={texture} />
+    </mesh>
+  );
+}
+
+function EarthCanvas() {
+  return (
+    <Canvas
+      camera={{ position: [0, 0, 4], fov: 45 }}
+      gl={{ alpha: true, antialias: true }}
+    >
+      <Suspense fallback={null}>
+        <RotatingEarth />
+      </Suspense>
+      
+      <OrbitControls 
+        autoRotate 
+        enableZoom={false}
+        enablePan={false}
+        autoRotateSpeed={1}
+        enableDamping={true}
+        dampingFactor={0.05}
+      />
+    </Canvas>
+  );
+}
+
+// Types
+interface ShootingStar {
+  id: number;
+  startX: number;
+  startY: number;
+  isVisible: boolean;
+}
+
+interface StaticStar {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  twinkle: boolean;
+}
 
 interface ContactInfo {
   icon: JSX.Element;
@@ -17,6 +79,7 @@ export default function Contact(): JSX.Element {
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(false);
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
   const [isContactInfoVisible, setIsContactInfoVisible] = useState<boolean>(false);
+  const [isEarthVisible, setIsEarthVisible] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,10 +87,12 @@ export default function Contact(): JSX.Element {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [transmissionStatus, setTransmissionStatus] = useState<string | null>(null);
   
   const headerRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLDivElement | null>(null);
   const contactInfoRef = useRef<HTMLDivElement | null>(null);
+  const earthRef = useRef<HTMLDivElement | null>(null);
 
   const contactInfo: ContactInfo[] = [
     {
@@ -61,14 +126,14 @@ export default function Contact(): JSX.Element {
   ];
 
   useEffect(() => {
-    // Generate stars identical to projects component
-    const stars = Array.from({ length: 150 }).map((_, i) => ({
+    // Generate stars
+    const stars = Array.from({ length: 200 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: Math.random() * 2 + 1,
       opacity: Math.random() * 0.8 + 0.2,
-      twinkle: Math.random() > 0.7,
+      twinkle: Math.random() > 0.6,
     }));
 
     setStaticStars(stars);
@@ -89,7 +154,7 @@ export default function Contact(): JSX.Element {
           prev.filter((star) => star.id !== newStar.id)
         );
       }, 2000);
-    }, 4000);
+    }, 3000);
 
     return () => {
       clearInterval(shootingStarInterval);
@@ -106,6 +171,8 @@ export default function Contact(): JSX.Element {
             setIsFormVisible(entry.isIntersecting);
           } else if (entry.target === contactInfoRef.current) {
             setIsContactInfoVisible(entry.isIntersecting);
+          } else if (entry.target === earthRef.current) {
+            setIsEarthVisible(entry.isIntersecting);
           }
         });
       },
@@ -115,6 +182,7 @@ export default function Contact(): JSX.Element {
     if (headerRef.current) observer.observe(headerRef.current);
     if (formRef.current) observer.observe(formRef.current);
     if (contactInfoRef.current) observer.observe(contactInfoRef.current);
+    if (earthRef.current) observer.observe(earthRef.current);
 
     return () => observer.disconnect();
   }, []);
@@ -131,9 +199,14 @@ export default function Contact(): JSX.Element {
     if (!formData.name || !formData.email || !formData.message) return;
     
     setIsSubmitting(true);
+    setTransmissionStatus('Establishing connection...');
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Simulate realistic transmission process
+    setTimeout(() => setTransmissionStatus('Encoding message...'), 800);
+    setTimeout(() => setTransmissionStatus('Transmitting to Earth...'), 1600);
+    setTimeout(() => setTransmissionStatus('Message received!'), 2400);
+    
+    await new Promise(resolve => setTimeout(resolve, 3000));
     
     // Reset form
     setFormData({
@@ -143,11 +216,12 @@ export default function Contact(): JSX.Element {
       message: ''
     });
     setIsSubmitting(false);
+    setTransmissionStatus(null);
   };
 
   return (
-    <section id="contact" className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-sky-600">
-      {/* Static Stars Background - Same as Projects */}
+    <section id="contact" className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-indigo-900">
+      {/* Enhanced Stars Background */}
       <div className="absolute inset-0 pointer-events-none">
         {staticStars.map((star) => (
           <div
@@ -164,12 +238,13 @@ export default function Contact(): JSX.Element {
               animationDuration: star.twinkle
                 ? `${Math.random() * 3 + 2}s`
                 : "none",
+              boxShadow: star.size > 1.5 ? '0 0 6px rgba(255,255,255,0.6)' : 'none'
             }}
           />
         ))}
       </div>
 
-      {/* Shooting Stars - Same as Projects */}
+      {/* Enhanced Shooting Stars */}
       <div className="absolute inset-0 pointer-events-none">
         {shootingStars.map((star) => (
           <div
@@ -182,19 +257,33 @@ export default function Contact(): JSX.Element {
           >
             {star.isVisible && (
               <div className="animate-shooting">
-                <div className="w-1 h-1 bg-white rounded-full shadow-lg shadow-white/50"></div>
-                <div className="absolute top-0 left-0 w-24 h-0.5 bg-gradient-to-r from-white to-transparent origin-left transform -rotate-45"></div>
+                <div className="w-2 h-2 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"></div>
+                <div className="absolute top-0 left-0 w-32 h-0.5 bg-gradient-to-r from-cyan-400 via-blue-400 to-transparent origin-left transform -rotate-45"></div>
               </div>
             )}
           </div>
         ))}
       </div>
 
-      
+      {/* Floating Particles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-blue-400 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 10}s`,
+              animationDuration: `${Math.random() * 20 + 10}s`
+            }}
+          />
+        ))}
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-6 py-20">
-        {/* Enhanced Header */}
+        {/* Enhanced Header with Earth */}
         <div 
           ref={headerRef}
           className={`text-center mb-20 transition-all duration-1000 ${
@@ -203,30 +292,55 @@ export default function Contact(): JSX.Element {
               : 'opacity-0 translate-y-12'
           }`}
         >
-          <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 max-w-4xl mx-auto">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <MessageCircle className="w-8 h-8 text-cyan-400" />
-              <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight">
-                Let&apos;s{' '}
-                <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
-                  Connect
-                </span>
-              </h2>
-              <Sparkles className="w-8 h-8 text-purple-400" style={{ animationDuration: '3s' }} />
-            </div>
-            
-            <p className="text-sky-100 text-xl max-w-3xl mx-auto leading-relaxed mb-6">
-              Ready to launch your next digital adventure? Let&apos;s explore the possibilities together across the cosmic web
-            </p>
+          <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-8 max-w-5xl mx-auto shadow-2xl">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="flex-1">
+                <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
+                  <Satellite className="w-8 h-8 text-cyan-400 animate-pulse" />
+                  <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight">
+                    Establish{' '}
+                    <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
+                      Contact
+                    </span>
+                  </h2>
+                  <Globe className="w-8 h-8 text-purple-400 animate-spin" style={{ animationDuration: '8s' }} />
+                </div>
+                
+                <p className="text-sky-100 text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-6">
+                  Ready to transmit your ideas across the digital cosmos? Let&apos;s connect and create something extraordinary together.
+                </p>
 
-            <div className="flex justify-center">
-              <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                <div className="flex justify-center lg:justify-start">
+                  <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                </div>
+              </div>
+
+              {/* 3D Earth */}
+              <div 
+                ref={earthRef}
+                className={`w-64 h-64 transition-all duration-1000 ${
+                  isEarthVisible 
+                    ? 'opacity-100 scale-100' 
+                    : 'opacity-0 scale-75'
+                }`}
+              >
+                <div className="relative w-full h-full">
+                  <EarthCanvas />
+                  {/* Orbital rings */}
+                  <div className="absolute inset-0 border-2 border-cyan-400/20 rounded-full animate-spin" style={{ animationDuration: '20s' }}></div>
+                  <div className="absolute inset-4 border border-purple-400/20 rounded-full animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }}></div>
+                  
+                  {/* Floating satellites */}
+                  <div className="absolute top-8 right-8 w-3 h-3 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50 animate-bounce"></div>
+                  <div className="absolute bottom-12 left-6 w-2 h-2 bg-purple-400 rounded-full shadow-lg shadow-purple-400/50 animate-pulse"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
-          {/* Contact Information */}
+          {/* Enhanced Contact Information */}
           <div 
             ref={contactInfoRef}
             className={`transition-all duration-1000 ${
@@ -235,16 +349,17 @@ export default function Contact(): JSX.Element {
                 : 'opacity-0 -translate-x-12'
             }`}
           >
-            <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 h-full">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-8 h-full shadow-2xl">
               <div className="flex items-center gap-3 mb-8">
                 <Rocket className="w-7 h-7 text-cyan-400" />
                 <h3 className="text-3xl font-bold text-white">
                   Mission Control
                 </h3>
+                <Zap className="w-6 h-6 text-yellow-400 animate-pulse" />
               </div>
               
               <p className="text-sky-200 mb-8 text-lg leading-relaxed">
-                Whether you&apos;re looking to build the next breakthrough app, need a coding companion for your startup journey, or just want to chat about the latest in tech - I&apos;m here and ready to help make your vision a reality.
+                Whether you&apos;re looking to build the next breakthrough app, need a coding companion for your startup journey, or want to explore the frontiers of technology - I&apos;m here to help navigate your digital expedition.
               </p>
 
               <div className="space-y-6">
@@ -252,13 +367,13 @@ export default function Contact(): JSX.Element {
                   <a
                     key={index}
                     href={info.href}
-                    className="group flex items-center p-4 backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl transition-all duration-300 hover:border-cyan-400/50 hover:bg-white/10 hover:scale-105 hover:shadow-lg hover:shadow-cyan-400/20"
+                    className="group flex items-center p-4 backdrop-blur-sm bg-gradient-to-r from-white/10 to-white/5 border border-white/20 rounded-2xl transition-all duration-300 hover:border-cyan-400/50 hover:bg-white/15 hover:scale-105 hover:shadow-xl hover:shadow-cyan-400/20"
                     style={{ transitionDelay: `${index * 100}ms` }}
                   >
                     <div className={`w-14 h-14 bg-gradient-to-r ${info.color} rounded-2xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                       {info.icon}
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <p className="text-white font-semibold text-lg group-hover:text-cyan-300 transition-colors duration-300">
                         {info.label}
                       </p>
@@ -267,27 +382,29 @@ export default function Contact(): JSX.Element {
                       </p>
                     </div>
                     
-                    {/* Sparkle Effect */}
-                    <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
                       <Star className="w-5 h-5 text-cyan-400 animate-spin" />
                     </div>
                   </a>
                 ))}
               </div>
 
-              {/* Floating Elements */}
-              <div className="relative mt-8">
-                <div className="absolute -top-2 -left-2 w-6 h-6 opacity-20">
-                  <Sparkles className="w-full h-full text-cyan-400" />
-                </div>
-                <div className="absolute -bottom-2 -right-2 w-4 h-4 opacity-30">
-                  <Star className="w-full h-full text-purple-400" />
+              {/* Enhanced Status Indicators */}
+              <div className="mt-8 p-4 bg-gradient-to-r from-emerald-400/10 to-cyan-400/10 border border-emerald-400/30 rounded-2xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+                  <span className="text-emerald-300 font-medium">System Online</span>
+                  <div className="ml-auto flex gap-2">
+                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0.4s' }}></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Contact Form */}
+          {/* Enhanced Contact Form */}
           <div 
             ref={formRef}
             className={`transition-all duration-1000 ${
@@ -296,13 +413,24 @@ export default function Contact(): JSX.Element {
                 : 'opacity-0 translate-x-12'
             }`}
           >
-            <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 h-full">
+            <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-8 h-full shadow-2xl">
               <div className="flex items-center gap-3 mb-8">
                 <Send className="w-7 h-7 text-purple-400" />
                 <h3 className="text-3xl font-bold text-white">
                   Send Transmission
                 </h3>
+                <MessageCircle className="w-6 h-6 text-cyan-400 animate-bounce" />
               </div>
+
+              {/* Transmission Status */}
+              {transmissionStatus && (
+                <div className="mb-6 p-4 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 border border-cyan-400/30 rounded-2xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-cyan-300 font-medium">{transmissionStatus}</span>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -317,7 +445,7 @@ export default function Contact(): JSX.Element {
                       value={formData.name}
                       onChange={handleInputChange}
                       className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-sky-300 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 backdrop-blur-sm hover:bg-white/15"
-                      placeholder="Enter your name"
+                      placeholder="Commander Name"
                       required
                     />
                   </div>
@@ -333,7 +461,7 @@ export default function Contact(): JSX.Element {
                       value={formData.email}
                       onChange={handleInputChange}
                       className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-sky-300 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 backdrop-blur-sm hover:bg-white/15"
-                      placeholder="your@email.com"
+                      placeholder="command@spacecraft.com"
                       required
                     />
                   </div>
@@ -341,7 +469,7 @@ export default function Contact(): JSX.Element {
 
                 <div>
                   <label htmlFor="subject" className="block text-sky-200 font-medium mb-3 text-sm uppercase tracking-wider">
-                    Subject
+                    Mission Codename
                   </label>
                   <input
                     type="text"
@@ -350,14 +478,14 @@ export default function Contact(): JSX.Element {
                     value={formData.subject}
                     onChange={handleInputChange}
                     className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-sky-300 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 backdrop-blur-sm hover:bg-white/15"
-                    placeholder="What's this about?"
+                    placeholder="Project Apollo or Web Revolution"
                     required
                   />
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sky-200 font-medium mb-3 text-sm uppercase tracking-wider">
-                    Message
+                    Transmission Data
                   </label>
                   <textarea
                     id="message"
@@ -366,54 +494,57 @@ export default function Contact(): JSX.Element {
                     onChange={handleInputChange}
                     rows={6}
                     className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-sky-300 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 resize-none backdrop-blur-sm hover:bg-white/15"
-                    placeholder="Tell me about your project, ideas, or just say hello..."
+                    placeholder="Describe your mission objectives, technical requirements, or simply establish first contact..."
                     required
                   ></textarea>
                 </div>
 
                 <div
                   onClick={handleSubmit}
-                  className="group w-full py-4 px-8 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 bg-size-200 hover:bg-pos-100 text-white rounded-2xl font-semibold transition-all duration-500 shadow-xl hover:shadow-cyan-500/30 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3 cursor-pointer"
+                  className="group w-full py-4 px-8 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 bg-size-200 hover:bg-pos-100 text-white rounded-2xl font-semibold transition-all duration-500 shadow-xl hover:shadow-cyan-500/30 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3 cursor-pointer relative overflow-hidden"
                 >
+                  {/* Animated background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/20 via-purple-600/20 to-pink-600/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-700"></div>
+                  
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                       <span>Transmitting...</span>
+                      <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                      <span>Launch Message</span>
+                      <span>Launch Transmission</span>
                       <div className="w-2 h-2 bg-white rounded-full animate-ping group-hover:animate-pulse"></div>
                     </>
                   )}
                 </div>
               </div>
-
-              {/* Corner Sparkle Effect */}
-              <div className="absolute top-4 right-4 w-6 h-6 opacity-30">
-                <Sparkles className="w-full h-full text-pink-400"/>
-              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Quote */}
+        {/* Enhanced Bottom Quote */}
         <div className="text-center mt-20">
-          <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 max-w-3xl mx-auto">
-            <p className="text-sky-100 text-lg italic mb-4">
-              &quot;The best way to predict the future is to create it together.&quot;
-            </p>
+          <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-8 max-w-4xl mx-auto shadow-2xl">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <Globe className="w-8 h-8 text-cyan-400 animate-spin" style={{ animationDuration: '10s' }} />
+              <p className="text-sky-100 text-xl italic">
+                &quot;The universe is not only queerer than we suppose, but queerer than we can suppose. Let&apos;s explore it together.&quot;
+              </p>
+              <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+            </div>
             <div className="flex items-center justify-center gap-2">
-              <div className="w-8 h-0.5 bg-gradient-to-r from-transparent to-cyan-400"></div>
+              <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-cyan-400"></div>
               <Star className="w-4 h-4 text-cyan-400 animate-pulse" />
-              <div className="w-8 h-0.5 bg-gradient-to-l from-transparent to-cyan-400"></div>
+              <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-cyan-400"></div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Custom Animations - Same as Projects */}
+      {/* Enhanced Custom Animations */}
       <style jsx>{`
         @keyframes shooting {
           0% {
@@ -434,8 +565,23 @@ export default function Contact(): JSX.Element {
           }
         }
 
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+            opacity: 0.3;
+          }
+          50% {
+            transform: translateY(-20px) rotate(180deg);
+            opacity: 0.8;
+          }
+        }
+
         .animate-shooting {
           animation: shooting 2s ease-out forwards;
+        }
+
+        .animate-float {
+          animation: float linear infinite;
         }
 
         .bg-size-200 {

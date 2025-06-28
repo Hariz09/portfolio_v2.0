@@ -119,7 +119,7 @@ export default function Hero(): JSX.Element {
   const currentStatus = statusOptions[currentStatusIndex];
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-gradient-to-b from-purple-900 via-purple-900 to-black">
+    <section className="min-h-screen relative overflow-hidden bg-gradient-to-b from-purple-900 via-purple-600 to-black">
       {/* Static Stars Background */}
       <div className="absolute inset-0 pointer-events-none">
         {staticStars.map((star) => (
