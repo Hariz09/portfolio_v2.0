@@ -1,28 +1,64 @@
-// components/About.tsx
-'use client';
-import { Icon } from '@iconify/react';
-import { aboutData } from '@/data/about';
-import TechSlider from './TechSlider';
-import StatsSection from './StatsSection';
-import SkillCard from './SkillCard';
-import { useState, useEffect } from 'react';
-import { ShootingStar, StaticStar } from '@/types/project';
+// components/Main.tsx
+"use client";
+import { Icon } from "@iconify/react";
+import { aboutData } from "@/data/about";
+import TechSlider from "./TechSlider";
+import SkillCard from "./SkillCard";
+import AcademicSection from "./Academic";
+import { useState, useEffect } from "react";
+import { ShootingStar, StaticStar } from "@/types/project";
 
 // Animated background component
 function AnimatedBackground() {
   const particles = [
-    { id: 1, size: 'w-2 h-2', color: 'bg-blue-500/20', position: 'top-20 left-10', animation: 'animate-pulse' },
-    { id: 2, size: 'w-1 h-1', color: 'bg-purple-500/30', position: 'top-40 right-20', animation: 'animate-ping' },
-    { id: 3, size: 'w-1.5 h-1.5', color: 'bg-green-500/25', position: 'bottom-32 left-1/4', animation: 'animate-pulse' },
-    { id: 4, size: 'w-1 h-1', color: 'bg-yellow-500/20', position: 'bottom-20 right-1/3', animation: 'animate-ping' },
-    { id: 5, size: 'w-3 h-3', color: 'bg-cyan-500/15', position: 'top-1/2 left-1/2', animation: 'animate-bounce' },
-    { id: 6, size: 'w-1.5 h-1.5', color: 'bg-pink-500/25', position: 'top-16 right-1/4', animation: 'animate-pulse delay-1000' },
+    {
+      id: 1,
+      size: "w-2 h-2",
+      color: "bg-blue-500/20",
+      position: "top-20 left-10",
+      animation: "animate-pulse",
+    },
+    {
+      id: 2,
+      size: "w-1 h-1",
+      color: "bg-purple-500/30",
+      position: "top-40 right-20",
+      animation: "animate-ping",
+    },
+    {
+      id: 3,
+      size: "w-1.5 h-1.5",
+      color: "bg-green-500/25",
+      position: "bottom-32 left-1/4",
+      animation: "animate-pulse",
+    },
+    {
+      id: 4,
+      size: "w-1 h-1",
+      color: "bg-yellow-500/20",
+      position: "bottom-20 right-1/3",
+      animation: "animate-ping",
+    },
+    {
+      id: 5,
+      size: "w-3 h-3",
+      color: "bg-cyan-500/15",
+      position: "top-1/2 left-1/2",
+      animation: "animate-bounce",
+    },
+    {
+      id: 6,
+      size: "w-1.5 h-1.5",
+      color: "bg-pink-500/25",
+      position: "top-16 right-1/4",
+      animation: "animate-pulse delay-1000",
+    },
   ];
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-purple-900/5"></div>
-      
+
       {/* Animated particles */}
       {particles.map((particle) => (
         <div
@@ -30,7 +66,7 @@ function AnimatedBackground() {
           className={`absolute ${particle.size} ${particle.color} ${particle.position} ${particle.animation} rounded-full`}
         ></div>
       ))}
-      
+
       {/* Floating geometric shapes */}
       <div className="absolute top-1/4 left-1/6 w-20 h-20 border border-blue-500/10 rounded-full animate-spin-slow"></div>
       <div className="absolute bottom-1/4 right-1/6 w-16 h-16 border border-purple-500/10 rotate-45 animate-pulse"></div>
@@ -39,12 +75,14 @@ function AnimatedBackground() {
 }
 
 export default function About() {
-  const { bio, skills, stats, techStack } = aboutData;
+  const { bio, skills, techStack } = aboutData;
 
-  const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(null);
+  const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(
+    null
+  );
   const [shootingStars, setShootingStars] = useState<ShootingStar[]>([]);
   const [staticStars, setStaticStars] = useState<StaticStar[]>([]);
-  
+
   const handleCardToggle = (index: number) => {
     // If clicking on the already expanded card, close it
     // Otherwise, open the clicked card and close any other
@@ -137,7 +175,7 @@ export default function About() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header Section */}
-        <div className="text-center my-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 bg-clip-text">
             {bio.title}
           </h2>
@@ -148,50 +186,20 @@ export default function About() {
 
         {/* Tech Stack Slider */}
         <TechSlider techStack={techStack} />
-        
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Biography Section */}
-          <div className="space-y-8">
-            <div className="space-y-6">
-              <h3 className="text-3xl font-bold text-white mb-8 flex items-center gap-4">
-                <div className="p-2 bg-blue-500/20 rounded-lg">
-                  <Icon icon="mdi:account-star" className="w-8 h-8 text-blue-400" />
-                </div>
-                My Journey
-              </h3>
-              
-              <div className="space-y-6">
-                {bio.paragraphs.map((paragraph, index) => (
-                  <p 
-                    key={index}
-                    className="text-gray-300 leading-relaxed text-lg"
-                    style={{
-                      animationDelay: `${index * 200}ms`,
-                      opacity: 0,
-                      animation: 'fadeInUp 0.8s ease-out forwards'
-                    }}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-            
-            {/* Stats Section */}
-            <StatsSection stats={stats} />
-          </div>
-          
-          {/* Skills Section */}
+
+        {/* Main Content - Vertical Layout */}
+        <div className="space-y-12 mt-12">
+          {/* Skills Section - Full width, compact grid */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-bold text-white mb-8 flex items-center gap-4">
+            <h3 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
               <div className="p-2 bg-purple-500/20 rounded-lg">
                 <Icon icon="mdi:brain" className="w-8 h-8 text-purple-400" />
               </div>
               Skills & Expertise
             </h3>
-            
-            <div className="grid gap-4">
+
+            {/* Skills in a responsive grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
               {skills.map((skill, index) => (
                 <SkillCard
                   key={index}
@@ -203,6 +211,11 @@ export default function About() {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Academic Section - Full Width */}
+        <div className="mt-16">
+          <AcademicSection />
         </div>
       </div>
 
@@ -218,7 +231,7 @@ export default function About() {
             transform: translateY(0);
           }
         }
-        
+
         @keyframes spin-slow {
           from {
             transform: rotate(0deg);
@@ -227,7 +240,7 @@ export default function About() {
             transform: rotate(360deg);
           }
         }
-        
+
         @keyframes shooting {
           0% {
             transform: translateX(0) translateY(0) scale(0);
@@ -250,7 +263,7 @@ export default function About() {
         .animate-shooting {
           animation: shooting 2s ease-out forwards;
         }
-        
+
         .animate-spin-slow {
           animation: spin-slow 20s linear infinite;
         }
