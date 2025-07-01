@@ -8,8 +8,7 @@ export interface Skill {
   name: string;
   level: 'Expert' | 'Advanced' | 'Intermediate' | 'Beginner';
   icon: string;
-  percentage: number;
-  category?: 'frontend' | 'backend' | 'database' | 'design' | 'devops' | 'mobile' | 'tools';
+  category?: 'frontend' | 'backend' | 'database' | 'design' | 'devops' | 'mobile' | 'tools' | 'others';
   description?: string;
   subSkills?: SubSkill[];
   experience?: string[];
@@ -25,7 +24,7 @@ export interface Stat {
 export interface TechStack {
   name: string;
   icon: string;
-  category: 'frontend' | 'backend' | 'database' | 'cloud' | 'tools' | 'design';
+  category: 'frontend' | 'backend' | 'database' | 'cloud' | 'tools' | 'design' | 'others';
 }
 
 export type SkillLevel = 'Expert' | 'Advanced' | 'Intermediate' | 'Beginner';
@@ -39,4 +38,21 @@ export interface AboutData {
     description: string;
     paragraphs: string[];
   };
+}
+
+export interface AcademicRecord {
+  id: number;
+  degree: string;
+  institution: string;
+  period: string;
+  imageUrl: string;
+}
+
+export interface Certification {
+  id: number;
+  name: string;
+  issuer: string;
+  date: string;
+  credentialUrl: string;
+  icon: string;
 }

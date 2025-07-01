@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { statusOptions } from "@/data/status";
 import { socialPlatforms } from "@/data/social";
 import { SocialPlatform } from "@/types/social";
-import StarryBackground from "./StarryBackground";
+import Link from "next/link";
 
 export default function Hero(): JSX.Element {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -27,7 +27,6 @@ export default function Hero(): JSX.Element {
 
   return (
     <section className="min-h-screen relative overflow-hidden">
-      <StarryBackground/>
       
       {/* Main content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
@@ -103,19 +102,19 @@ export default function Hero(): JSX.Element {
               }`}
             >
               {socialPlatforms.map((social: SocialPlatform) => (
-                <a
-                  key={social.name}
+                <Link
+                  key={social.username}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-slate-800/50 border border-slate-600 rounded-full flex items-center justify-center hover:bg-slate-700/50 hover:border-slate-500 transition-all duration-300 group hover:scale-110"
-                  title={social.name}
+                  title={social.username}
                 >
                   <Icon
                     icon={social.icon}
                     className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors duration-300"
                   />
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -169,12 +168,12 @@ export default function Hero(): JSX.Element {
           >
             {socialPlatforms.map((social: SocialPlatform) => (
               <a
-                key={social.name}
+                key={social.username}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 bg-slate-800/50 border border-slate-600 rounded-full flex items-center justify-center hover:bg-slate-700/50 hover:border-slate-500 transition-all duration-300 group hover:scale-110 hover:-translate-x-2"
-                title={social.name}
+                title={social.username}
               >
                 <Icon
                   icon={social.icon}

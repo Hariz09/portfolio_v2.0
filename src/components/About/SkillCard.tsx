@@ -14,25 +14,21 @@ const getSkillLevelStyles = (level: Skill['level']) => {
   const styles = {
     Expert: {
       badge: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-      progress: 'bg-gradient-to-r from-emerald-500 to-emerald-400',
       glow: 'group-hover:shadow-emerald-500/20',
       ring: 'ring-emerald-500/30'
     },
     Advanced: {
       badge: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-      progress: 'bg-gradient-to-r from-blue-500 to-blue-400',
       glow: 'group-hover:shadow-blue-500/20',
       ring: 'ring-blue-500/30'
     },
     Intermediate: {
       badge: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-      progress: 'bg-gradient-to-r from-amber-500 to-amber-400',
       glow: 'group-hover:shadow-amber-500/20',
       ring: 'ring-amber-500/30'
     },
     Beginner: {
       badge: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-      progress: 'bg-gradient-to-r from-purple-500 to-purple-400',
       glow: 'group-hover:shadow-purple-500/20',
       ring: 'ring-purple-500/30'
     }
@@ -71,7 +67,7 @@ export default function SkillCard({ skill, index, isExpanded, onToggle }: SkillC
         className="p-5 cursor-pointer"
         onClick={() => onToggle(index)}
       >
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">
               <Icon 
@@ -80,7 +76,10 @@ export default function SkillCard({ skill, index, isExpanded, onToggle }: SkillC
               />
               <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
-            <span className="text-gray-200 font-semibold">{skill.name}</span>
+            <div className="flex flex-col">
+              <span className="text-gray-200 font-semibold">{skill.name}</span>
+              <span className="text-xs text-gray-500 capitalize">{skill.category}</span>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <span className={`text-xs px-3 py-1.5 rounded-full font-semibold border ${styles.badge}`}>
@@ -90,22 +89,6 @@ export default function SkillCard({ skill, index, isExpanded, onToggle }: SkillC
               icon={isExpanded ? "mdi:chevron-up" : "mdi:chevron-down"} 
               className="w-5 h-5 text-gray-400 transition-transform duration-300"
             />
-          </div>
-        </div>
-        
-        <div className="space-y-2">
-          <div className="w-full bg-gray-700/50 rounded-full h-2.5 overflow-hidden">
-            <div 
-              className={`h-full rounded-full transition-all duration-1000 ease-out ${styles.progress}`}
-              style={{ 
-                width: `${skill.percentage}%`,
-                animationDelay: `${index * 200 + 500}ms`
-              }}
-            ></div>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-500 capitalize">{skill.category}</span>
-            <span className="text-sm font-medium text-gray-300">{skill.percentage}%</span>
           </div>
         </div>
       </div>

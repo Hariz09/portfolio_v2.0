@@ -75,35 +75,7 @@ const StarryBackground: React.FC<StarryBackgroundProps> = ({
   }, [staticStarCount, shootingStarInterval, shootingStarFrequency]);
 
   return (
-    <div className={`absolute inset-0 overflow-hidden ${backgroundColor} ${className}`}>
-      {/* Custom CSS for animations */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          @keyframes shooting {
-            0% {
-              transform: translateX(0) translateY(0) scale(0);
-              opacity: 0;
-            }
-            10% {
-              transform: translateX(0) translateY(0) scale(1);
-              opacity: 1;
-            }
-            90% {
-              transform: translateX(-600px) translateY(600px) scale(1);
-              opacity: 0.3;
-            }
-            100% {
-              transform: translateX(-800px) translateY(800px) scale(0);
-              opacity: 0;
-            }
-          }
-
-          .animate-shooting {
-            animation: shooting 2s ease-out forwards;
-          }
-        `
-      }} />
-
+    <div className={`absolute inset-0 overflow-hidden pointer-events-none ${backgroundColor} ${className}`}>
       {/* Static Stars Background */}
       <div className="absolute inset-0 pointer-events-none">
         {staticStars.map((star) => (

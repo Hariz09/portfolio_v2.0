@@ -6,10 +6,10 @@ import TechSlider from "./TechSlider";
 import SkillCard from "./SkillCard";
 import AcademicSection from "./Academic";
 import { useState } from "react";
-import StarryBackground from "../StarryBackground";
+import { Sparkles } from "lucide-react";
 
 export default function About() {
-  const { bio, skills, techStack } = aboutData;
+  const { skills, techStack } = aboutData;
   const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(null);
 
   const handleCardToggle = (index: number) => {
@@ -20,16 +20,19 @@ export default function About() {
 
   return (
     <section id="about" className="relative overflow-hidden">
-      <StarryBackground/>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 bg-clip-text">
-            {bio.title}
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            {bio.description}
-          </p>
+        {/* Section Header */}
+        <div className="text-center mb-20">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <Sparkles className="w-8 h-8 text-cyan-400 animate-pulse" />
+            <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-400 bg-clip-text text-transparent">
+              About Me
+            </h2>
+            <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+          </div>
+          <div className="flex items-center justify-center">
+            <div className="h-px bg-gradient-to-r from-transparent via-cyan-700 to-transparent w-full max-w-md"></div>
+          </div>
         </div>
 
         {/* Tech Stack Slider */}

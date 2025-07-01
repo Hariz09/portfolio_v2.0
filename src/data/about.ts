@@ -1,5 +1,5 @@
 // data/about.data.ts
-import { AboutData } from '../types/about';
+import { AboutData, AcademicRecord, Certification } from '../types/about';
 
 export const aboutData: AboutData = {
   bio: {
@@ -12,107 +12,24 @@ export const aboutData: AboutData = {
   
   skills: [
     { 
-      name: 'React & Next.js', 
-      level: 'Expert', 
-      icon: 'logos:react', 
-      percentage: 95,
-      category: 'frontend',
-      description: "Extensive experience building modern, scalable React applications with Next.js, focusing on performance optimization and user experience.",
-      subSkills: [
-        { name: 'React Hooks', level: 'Expert' },
-        { name: 'State Management (Redux/Zustand)', level: 'Expert' },
-        { name: 'Server Components', level: 'Advanced' },
-        { name: 'Performance Optimization', level: 'Advanced' },
-        { name: 'Testing (Jest/RTL)', level: 'Intermediate' }
-      ],
-      experience: [
-        'Built 15+ production React applications',
-        'Optimized app performance resulting in 40% faster load times',
-        'Implemented complex state management for enterprise applications',
-        'Created reusable component libraries used by 5+ teams'
-      ],
-      relatedTech: ['TypeScript', 'Tailwind CSS', 'Framer Motion', 'React Query', 'Webpack', 'Vite']
-    },
-    { 
-      name: 'TypeScript', 
-      level: 'Expert', 
-      icon: 'logos:typescript-icon', 
-      percentage: 90,
-      category: 'frontend',
-      description: "Deep expertise in TypeScript for building type-safe, maintainable applications with advanced type system features.",
-      subSkills: [
-        { name: 'Advanced Types', level: 'Expert' },
-        { name: 'Generics & Utility Types', level: 'Expert' },
-        { name: 'Decorators', level: 'Advanced' },
-        { name: 'Module System', level: 'Advanced' },
-        { name: 'Type Guards', level: 'Intermediate' }
-      ],
-      experience: [
-        'Migrated 5+ JavaScript codebases to TypeScript',
-        'Created complex type definitions for third-party libraries',
-        'Reduced runtime errors by 60% through strict typing',
-        'Established TypeScript best practices for development teams'
-      ],
-      relatedTech: ['JavaScript', 'Node.js', 'React', 'Express', 'Prisma', 'GraphQL']
-    },
-    { 
-      name: 'Node.js & Express', 
-      level: 'Advanced', 
-      icon: 'logos:nodejs-icon', 
-      percentage: 85,
-      category: 'backend',
-      description: "Proficient in building robust backend APIs and microservices using Node.js and Express with focus on scalability and security.",
-      subSkills: [
-        { name: 'RESTful APIs', level: 'Expert' },
-        { name: 'Authentication & Authorization', level: 'Advanced' },
-        { name: 'Database Integration', level: 'Advanced' },
-        { name: 'Microservices Architecture', level: 'Intermediate' },
-        { name: 'WebSocket Implementation', level: 'Intermediate' }
-      ],
-      experience: [
-        'Built 10+ REST APIs serving 1M+ requests daily',
-        'Implemented JWT authentication for secure applications',
-        'Optimized database queries reducing response time by 50%',
-        'Deployed scalable microservices using Docker and Kubernetes'
-      ],
-      relatedTech: ['Express.js', 'Fastify', 'MongoDB', 'PostgreSQL', 'Redis', 'JWT', 'Passport.js']
-    },
-    { 
-      name: 'Database Design', 
-      level: 'Advanced', 
-      icon: 'mdi:database', 
-      percentage: 82,
-      category: 'database',
-      description: "Experienced in designing efficient database schemas and optimizing queries for both SQL and NoSQL databases.",
-      subSkills: [
-        { name: 'SQL Query Optimization', level: 'Advanced' },
-        { name: 'Database Normalization', level: 'Advanced' },
-        { name: 'Indexing Strategies', level: 'Intermediate' },
-        { name: 'NoSQL Design Patterns', level: 'Intermediate' },
-        { name: 'Database Migrations', level: 'Advanced' }
-      ],
-      experience: [
-        'Designed databases for 8+ production applications',
-        'Optimized queries resulting in 70% performance improvement',
-        'Managed database migrations for applications with 1M+ records',
-        'Implemented caching strategies reducing database load by 40%'
-      ],
-      relatedTech: ['PostgreSQL', 'MongoDB', 'Redis', 'Prisma', 'Mongoose', 'SQL', 'Database Indexing']
-    },
-    { 
       name: 'Competitive Programming', 
       level: 'Advanced', 
-      icon: 'mdi:code-tags', 
-      percentage: 80,
-      category: 'backend',
+      icon: 'mdi:code-tags',
+      category: 'others',
       description: "I've been doing competitive programming for 3 years and completed 1000+ problem sets, achieving Specialist rating on Codeforces with consistent performance in contests.",
       subSkills: [
-        { name: 'Brute Force', level: 'Expert' },
-        { name: 'Divide and Conquer', level: 'Expert' },
-        { name: 'Two Pointers', level: 'Expert' },
+        { name: 'Data Structures (Arrays, Linked Lists, Stacks, Queues)', level: 'Advanced' },
+        { name: 'Advanced Data Structures (Trees, Heaps, Hash Tables)', level: 'Intermediate' },
+        { name: 'Graph Algorithms (DFS, BFS, Shortest Path)', level: 'Advanced' },
         { name: 'Dynamic Programming', level: 'Advanced' },
-        { name: 'Graph Algorithms (BFS, DFS)', level: 'Intermediate' },
-        { name: 'Tree Algorithms', level: 'Beginner' }
+        { name: 'Greedy Algorithms', level: 'Advanced' },
+        { name: 'Binary Search & Two Pointers', level: 'Advanced' },
+        { name: 'Sorting & Searching Algorithms', level: 'Advanced' },
+        { name: 'Contest Strategy & Time Management', level: 'Advanced' },
+        { name: 'String Algorithms & Pattern Matching', level: 'Intermediate' },
+        { name: 'Number Theory & Mathematical Algorithms', level: 'Beginner' },
+        { name: 'Combinatorics & Probability', level: 'Beginner' },
+        { name: 'Segment Trees & Fenwick Trees', level: 'Beginner' },
       ],
       experience: [
         'Achieved Specialist rating (1400+) on Codeforces',
@@ -122,45 +39,107 @@ export const aboutData: AboutData = {
       ],
       relatedTech: ['C++', 'Python', 'Java', 'Algorithms', 'Data Structures']
     },
-    { 
-      name: 'UI/UX Design', 
+    {
+      name: 'React & Next.js', 
       level: 'Intermediate', 
-      icon: 'mdi:palette', 
-      percentage: 75,
-      category: 'design',
-      description: "Solid understanding of design principles with hands-on experience in creating user-centered interfaces and experiences.",
+      icon: 'logos:react',
+      category: 'frontend',
+      description: "Extensive experience building modern, scalable React applications with Next.js, focusing on performance optimization and user experience.",
       subSkills: [
-        { name: 'Figma Design', level: 'Intermediate' },
-        { name: 'Prototyping', level: 'Intermediate' },
-        { name: 'User Research', level: 'Beginner' },
-        { name: 'Responsive Design', level: 'Advanced' },
-        { name: 'Design Systems', level: 'Intermediate' }
+        { name: 'React Hooks', level: 'Intermediate' },
+        { name: 'State Management (Redux/Zustand)', level: 'Intermediate' },
+        { name: 'Server Components', level: 'Beginner' },
+        { name: 'Performance Optimization', level: 'Beginner' },
+        { name: '3D Object Creation (Three.js)', level: 'Intermediate' },
+        { name: 'Node-based Editor (ReactFlow)', level: 'Beginner' }
       ],
       experience: [
-        'Designed interfaces for 10+ web applications',
-        'Created design systems used across multiple projects',
-        'Conducted user testing sessions for 3+ applications',
-        'Improved user engagement by 35% through design optimizations'
+        'Built a production React applications',
+        'Optimized app performance resulting in faster load times',
+        'Created reusable component libraries'
       ],
-      relatedTech: ['Figma', 'Adobe XD', 'Sketch', 'Tailwind CSS', 'Material-UI', 'Framer Motion']
+      relatedTech: ['TypeScript', 'Tailwind CSS', 'Framer Motion', 'React Query', 'Three.js', 'ReactFlow']
+    },
+    { 
+      name: 'TypeScript', 
+      level: 'Intermediate', 
+      icon: 'logos:typescript-icon',
+      category: 'frontend',
+      description: "Strong foundation in TypeScript for building type-safe React applications, with experience in advanced type patterns and modern development workflows.",
+      subSkills: [
+        { name: 'Type Definitions & Interfaces', level: 'Intermediate' },
+        { name: 'Generic Types', level: 'Intermediate' },
+        { name: 'React with TypeScript', level: 'Intermediate' },
+        { name: 'Advanced Type Patterns', level: 'Beginner' },
+        { name: 'Type Guards & Assertions', level: 'Beginner' },
+        { name: 'Module Declaration', level: 'Beginner' }
+      ],
+      experience: [
+        'Developed type-safe React components and hooks',
+        'Implemented complex type definitions for API responses',
+        'Migrated JavaScript projects to TypeScript',
+        'Created reusable typed utility functions'
+      ],
+      relatedTech: ['React', 'Next.js', 'ESLint', 'Prettier', 'Vite', 'Jest']
+    },
+    { 
+      name: 'Database Design', 
+      level: 'Intermediate', 
+      icon: 'mdi:database',
+      category: 'database',
+      description: "Strong foundation in relational database design and SQL development, with experience in PostgreSQL and modern database-as-a-service platforms.",
+      subSkills: [
+        { name: 'Relational Database Design', level: 'Intermediate' },
+        { name: 'SQL Query Writing & Optimization', level: 'Intermediate' },
+        { name: 'PostgreSQL Administration', level: 'Intermediate' },
+        { name: 'Database Schema Design', level: 'Intermediate' },
+        { name: 'Redis Caching Strategies', level: 'Beginner' },
+        { name: 'Supabase Integration', level: 'Beginner' }
+      ],
+      experience: [
+        'Designed normalized PostgreSQL schemas for web applications',
+        'Wrote complex SQL queries with joins and subqueries',
+        'Implemented Redis caching for improved application performance',
+        'Built applications using Supabase as backend-as-a-service',
+      ],
+      relatedTech: ['PostgreSQL', 'Redis', 'Supabase', 'SQL', 'Prisma']
+    },
+    {
+      name: 'Next.js Development',
+      level: 'Intermediate',
+      icon: 'logos:nextjs-icon',
+      category: 'frontend',
+      description: "Full-stack React framework development with focus on performance optimization and modern web development patterns.",
+      subSkills: [
+        { name: 'App Router & Server Components', level: 'Intermediate' },
+        { name: 'API Routes Development', level: 'Intermediate' },
+        { name: 'SSR/SSG Implementation', level: 'Intermediate' },
+        { name: 'Next.js Performance Optimization', level: 'Intermediate' },
+        { name: 'Middleware & Edge Functions', level: 'Beginner' },
+        { name: 'Vercel Deployment', level: 'Intermediate' }
+      ],
+      experience: [
+        'Built full-stack applications using Next.js App Router',
+        'Implemented server-side rendering for improved SEO',
+        'Created API endpoints with Next.js API routes',
+        'Optimized performance with code splitting and lazy loading'
+      ],
+      relatedTech: ['React', 'TypeScript', 'Vercel', 'Tailwind CSS']
     },
     { 
       name: 'AWS & Cloud Services', 
-      level: 'Intermediate', 
+      level: 'Beginner', 
       icon: 'logos:aws', 
-      percentage: 72,
       category: 'devops',
       description: "Experience with cloud infrastructure, deployment, and management using AWS services and modern DevOps practices.",
       subSkills: [
-        { name: 'EC2 & Load Balancing', level: 'Intermediate' },
-        { name: 'S3 & CloudFront', level: 'Advanced' },
-        { name: 'Lambda Functions', level: 'Intermediate' },
+        { name: 'S3 & CloudFront', level: 'Beginner' },
       ],
       experience: [
         'Deployed application on AWS infrastructure',
         'Implemented auto-scaling for applications handling traffic spikes'
       ],
-      relatedTech: ['AWS EC2', 'AWS S3', 'AWS Lambda', 'GitHub Actions']
+      relatedTech: ['AWS S3', 'GitHub Actions']
     },
   ],
   
@@ -186,11 +165,42 @@ export const aboutData: AboutData = {
     { name: 'Supabase', icon: 'skill-icons:supabase-light', category: 'database'},
     
     { name: 'AWS', icon: 'skill-icons:aws-dark', category: 'cloud' },
-    { name: 'Vercel', icon: 'skill-icons:vercel-light', category: 'cloud' },
     { name: 'Resend', icon: 'simple-icons:resend', category: 'cloud'},
+    { name: 'Vercel', icon: 'skill-icons:vercel-light', category: 'cloud' },
+    { name: 'Netlify', icon: 'logos:netlify-icon', category: 'others'},
+    { name: 'Vite', icon: 'logos:vitejs', category: 'others'},
     
     { name: 'Git', icon: 'logos:git-icon', category: 'tools' },
     { name: 'Figma', icon: 'logos:figma', category: 'design' },
     { name: 'Canva', icon: 'devicon:canva', category: 'design'},
+    { name: "Shadcn", icon: 'simple-icons:shadcnui', category: 'design'},
+
+    { name: 'C++', icon: 'simple-icons:cplusplus', category: 'others'},
+    { name: 'C#', icon: 'arcticons:csharp', category: 'others'},
+    { name: 'Java', icon: 'logos:java', category: 'others'},
   ]
+};
+
+
+export const academicData = {
+  education: [
+    {
+      id: 1,
+      degree: "Bachelor of Computer Science (in progress)",
+      institution: "Universitas Indonesia",
+      period: "2024 - present",
+      imageUrl: "/logos/logo-ui.png",
+    }
+  ] as AcademicRecord[],
+  
+  certifications: [
+    {
+      id: 1,
+      name: "The Complete SQL Bootcamp",
+      issuer: "Udemy",
+      date: "2023",
+      credentialUrl: "https://ude.my/UC-aa84fd8c-5cb2-4fc8-be90-bfa36d6c7e94",
+      icon: "logos:udemy-icon",
+    },
+  ] as Certification[]
 };

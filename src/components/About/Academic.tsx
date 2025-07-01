@@ -1,80 +1,26 @@
 // components/AcademicSection.tsx
+// components/AcademicSection.tsx
 'use client';
+import Image from 'next/image';
 import { Icon } from '@iconify/react';
-
-interface AcademicRecord {
-  id: number;
-  degree: string;
-  institution: string;
-  period: string;
-  icon: string;
-  color: string;
-  bgColor: string;
-}
-
-interface Certification {
-  id: number;
-  name: string;
-  issuer: string;
-  date: string;
-  credentialId?: string;
-  icon: string;
-  color: string;
-}
-
-// Sample academic data - replace with your actual data
-const academicData = {
-  education: [
-    {
-      id: 1,
-      degree: "Bachelor of Computer Science",
-      institution: "Universitas Indonesia",
-      period: "2024 - now",
-      icon: "mdi:laptop",
-      color: "text-green-400",
-      bgColor: "bg-green-500/20"
-    }
-  ] as AcademicRecord[],
-  
-  certifications: [
-    {
-      id: 1,
-      name: "AWS Solutions Architect Professional",
-      issuer: "Amazon Web Services",
-      date: "2023",
-      credentialId: "AWS-SAP-2023-001",
-      icon: "mdi:aws",
-      color: "text-orange-400"
-    },
-    {
-      id: 2,
-      name: "Google Cloud Professional Developer",
-      issuer: "Google Cloud",
-      date: "2022",
-      credentialId: "GCP-PD-2022-001",
-      icon: "mdi:google-cloud",
-      color: "text-blue-400"
-    },
-    {
-      id: 3,
-      name: "Certified Kubernetes Administrator",
-      issuer: "Cloud Native Computing Foundation",
-      date: "2023",
-      credentialId: "CKA-2023-001",
-      icon: "mdi:kubernetes",
-      color: "text-purple-400"
-    }
-  ] as Certification[]
-};
+import { academicData } from '@/data/about';
+import { AcademicRecord, Certification } from '@/types/about';
+import Link from 'next/link';
 
 function EducationCard({ education }: { education: AcademicRecord }) {
   return (
     <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
       <div className="flex items-start gap-4">
-        <div className={`p-3 ${education.bgColor} rounded-lg flex-shrink-0`}>
-          <Icon icon={education.icon} className={`w-6 h-6 ${education.color}`} />
+        <div className="w-12 h-12 relative flex-shrink-0">
+          <Image
+            src={education.imageUrl}
+            alt={`${education.institution} logo`}
+            fill
+            className="object-contain rounded"
+            sizes="48px"
+          />
         </div>
-        
+       
         <div className="flex-1">
           <h4 className="text-xl font-semibold text-white mb-2">{education.degree}</h4>
           <p className="text-blue-400 font-medium mb-1">{education.institution}</p>
@@ -87,19 +33,24 @@ function EducationCard({ education }: { education: AcademicRecord }) {
 
 function CertificationCard({ certification }: { certification: Certification }) {
   return (
-    <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 hover:scale-105">
+    <div className="mb-2 bg-gray-900/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 hover:scale-105">
       <div className="flex items-center gap-3">
         <div className="p-2 bg-gray-700/50 rounded-lg">
-          <Icon icon={certification.icon} className={`w-6 h-6 ${certification.color}`} />
+          <Icon icon={certification.icon} className={`w-6 h-6`} />
         </div>
-        
+       
         <div className="flex-1">
           <h4 className="text-white font-semibold text-sm">{certification.name}</h4>
           <p className="text-gray-400 text-xs">{certification.issuer}</p>
           <p className="text-gray-500 text-xs">{certification.date}</p>
-          {certification.credentialId && (
-            <p className="text-blue-400 text-xs mt-1">ID: {certification.credentialId}</p>
-          )}
+            <Link
+            href={certification.credentialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 text-xs mt-1 underline hover:text-blue-300 transition-colors"
+            >
+            View Credential
+            </Link>
         </div>
       </div>
     </div>
@@ -117,7 +68,7 @@ export default function AcademicSection() {
           </div>
           Education
         </h3>
-        
+       
         <div className="space-y-6">
           {academicData.education.map((education) => (
             <EducationCard
@@ -136,7 +87,7 @@ export default function AcademicSection() {
           </div>
           Certifications
         </h3>
-        
+       
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {academicData.certifications.map((certification) => (
             <CertificationCard key={certification.id} certification={certification} />
@@ -156,7 +107,7 @@ export default function AcademicSection() {
             transform: translateY(0);
           }
         }
-        
+       
         .animate-fadeIn {
           animation: fadeIn 0.3s ease-out forwards;
         }

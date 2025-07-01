@@ -1,36 +1,19 @@
+// Technology interface for individual tech stack items
+export interface Technology {
+  name: string;      // Display name of the technology (e.g., "React", "Next.js")
+  icon: string;      // Iconify icon name (e.g., "logos:react", "devicon:nextjs")
+}
+
+// Main Project interface
 export interface Project {
-  title: string;
-  description: string;
-  tech: string[];
-  github: string;
-  demo: string;
-  docs: string
-  image: string;
-  color: string;
-  featured?: boolean;
-}
-
-export interface ShootingStar {
-  id: number;
-  startX: number;
-  startY: number;
-  isVisible: boolean;
-}
-
-export interface MousePosition {
-  x: number;
-  y: number;
-}
-
-export interface AnimationStyle {
-  animationDelay: string;
-}
-
-export interface StaticStar {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  opacity: number;
-  twinkle: boolean;
+  id: number;                    // Unique identifier for the project
+  title: string;                 // Project title/name
+  category: string;              // Project category (e.g., "Web Application", "Mobile App")
+  description: string;           // Detailed project description
+  iconPath: string;              // Path to project icon image
+  liveUrl: string;               // URL to live/deployed project
+  docsUrl?: string;              // Optional: URL to project documentation
+  githubUrl: string;             // GitHub repository URL
+  technologies: Technology[];    // Array of technologies used
+  highlights: string[];          // Array of key achievements/features
 }

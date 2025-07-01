@@ -1,4 +1,3 @@
-// components/TechSlider.tsx
 'use client';
 import { Icon } from '@iconify/react';
 import { TechStack } from '@/types/about';
@@ -8,48 +7,63 @@ interface TechSliderProps {
 }
 
 export default function TechSlider({ techStack }: TechSliderProps) {
-  // Create multiple copies for seamless infinite scroll
-  const duplicatedTechStack = [...techStack, ...techStack, ...techStack];
-  
   return (
-    <div className="pt-2 mb-20 overflow-hidden">
-      <div className="relative">
-        {/* Gradient overlays for smooth edges */}
-        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-black to-transparent z-10"></div>
-        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-black to-transparent z-10"></div>
-        
-        <div className="flex animate-[slide_40s_linear_infinite] hover:pause">
-          {duplicatedTechStack.map((tech, index) => (
+    <div className="pt-2 mb-20">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3">
+            Tech Stack
+          </h2>
+          <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">
+            Technologies and tools I work with to bring ideas to life
+          </p>
+        </div>
+
+        {/* Professional masonry-style layout */}
+        <div className="flex flex-wrap justify-center gap-3 md:gap-4 lg:gap-5">
+          {techStack.map((tech, index) => (
             <div 
-              key={`${tech.name}-${index}`}
-              className="flex-shrink-0 mx-3 group"
+              key={tech.name}
+              className="group flex flex-col items-center min-w-[70px] md:min-w-[80px]"
+              style={{ 
+                animationDelay: `${index * 0.05}s`
+              }}
             >
-              <div className="w-16 h-16 flex items-center justify-center bg-gray-900/60 hover:bg-gray-800/80 rounded-xl border border-gray-800 hover:border-gray-600 transition-all duration-300 hover:scale-110 hover:shadow-lg">
+              {/* Icon container */}
+              <div className="w-14 h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 flex items-center justify-center bg-gray-900/40 hover:bg-gray-800/60 rounded-lg border border-gray-800/50 hover:border-gray-600/80 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-gray-900/30 animate-[fadeInUp_0.5s_ease-out_forwards] opacity-0 backdrop-blur-sm">
                 <Icon 
                   icon={tech.icon} 
-                  className="w-10 h-10 transition-transform duration-300 group-hover:scale-110" 
+                  className="w-7 h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 transition-all duration-300 group-hover:scale-110 text-gray-300 group-hover:text-white" 
                 />
               </div>
-              <div className="text-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-xs text-gray-400 font-medium">{tech.name}</span>
+              
+              {/* Tech name - always visible */}
+              <div className="text-center mt-1.5 md:mt-2">
+                <span className="text-[10px] md:text-xs text-gray-500 group-hover:text-gray-300 font-medium transition-colors duration-300 leading-tight">
+                  {tech.name}
+                </span>
               </div>
             </div>
           ))}
         </div>
+        
+        {/* Section divider */}
+        <div className="mt-12 flex items-center justify-center">
+          <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent w-full max-w-md"></div>
+        </div>
       </div>
       
       <style jsx>{`
-        @keyframes slide {
+        @keyframes fadeInUp {
           0% {
-            transform: translateX(0);
+            opacity: 0;
+            transform: translateY(15px);
           }
           100% {
-            transform: translateX(-33.333%);
+            opacity: 1;
+            transform: translateY(0);
           }
-        }
-        
-        .hover\\:pause:hover {
-          animation-play-state: paused;
         }
       `}</style>
     </div>

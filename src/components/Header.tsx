@@ -261,13 +261,13 @@ const ModernHeader: React.FC = () => {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Made Smaller */}
           <div className="lg:hidden">
-            <MovingBorderButton
+            <button
               onClick={toggleMobileMenu}
-              className="p-2"
+              className="relative group p-1.5 rounded-lg bg-slate-800/50 backdrop-blur-xl border border-slate-600 text-slate-300 hover:text-white hover:bg-slate-700/50 hover:border-slate-500 transition-all duration-300"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
@@ -275,7 +275,7 @@ const ModernHeader: React.FC = () => {
                   d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} 
                 />
               </svg>
-            </MovingBorderButton>
+            </button>
           </div>
         </div>
 

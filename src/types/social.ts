@@ -1,5 +1,6 @@
 export interface SocialPlatform {
-  name: string;
+  platform: string;
+  username: string;
   icon: string;
   url: string;
 }
