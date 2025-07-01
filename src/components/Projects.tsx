@@ -25,10 +25,7 @@ interface Project {
   highlights: string[];
 }
 
-// Props interface for the component (if needed for future props)
-interface ProjectsSectionProps {}
-
-const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
+const ProjectsSection: React.FC = () => {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
 
   const toggleProject = (projectId: number): void => {
