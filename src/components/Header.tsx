@@ -1,6 +1,7 @@
 'use client'
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+
 // Types
 interface Point {
   x: number;
@@ -133,8 +134,8 @@ const MovingBorder: React.FC<MovingBorderProps> = ({
           left: `${point.x}px`,
           top: `${point.y}px`,
           transform: 'translate(-50%, -50%)',
-          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(147, 51, 234, 0.8) 50%, transparent 70%)',
-          boxShadow: '0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(147, 51, 234, 0.4)',
+          background: 'radial-gradient(circle, rgba(96, 165, 250, 0.8) 0%, rgba(147, 51, 234, 0.8) 50%, transparent 70%)',
+          boxShadow: '0 0 20px rgba(96, 165, 250, 0.6), 0 0 40px rgba(147, 51, 234, 0.4)',
         }}
       />
     </div>
@@ -168,7 +169,7 @@ const MovingBorderButton: React.FC<MovingBorderButtonProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative overflow-hidden rounded-xl p-[2px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent">
+      <div className="relative overflow-hidden rounded-xl p-[2px] bg-gradient-to-r from-transparent via-slate-500/20 to-transparent">
         {(isHovered || isActive) && (
           <MovingBorder 
             duration={1500} 
@@ -180,23 +181,23 @@ const MovingBorderButton: React.FC<MovingBorderButtonProps> = ({
           onClick={handleClick}
           className={`
             relative flex items-center justify-center px-6 py-3 rounded-xl
-            bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl
-            border border-white/30 dark:border-gray-700/30
-            text-gray-700 dark:text-gray-300
+            bg-slate-800/50 backdrop-blur-xl
+            border border-slate-600
+            text-slate-300
             font-medium text-sm
             transition-all duration-500 ease-out
-            group-hover:text-gray-900 dark:group-hover:text-white
-            group-hover:bg-white/90 dark:group-hover:bg-gray-800/90
-            group-hover:border-blue-500/50 dark:group-hover:border-purple-500/50
-            group-hover:shadow-lg group-hover:shadow-blue-500/25 dark:group-hover:shadow-purple-500/25
-            ${isActive ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : ''}
+            group-hover:text-white
+            group-hover:bg-slate-700/50
+            group-hover:border-slate-500
+            group-hover:shadow-lg group-hover:shadow-blue-500/25
+            ${isActive ? 'text-blue-400 bg-slate-700/70 border-slate-500' : ''}
             ${className}
           `}
         >
           <span className="relative z-10 group-hover:scale-105 transition-transform duration-300">
             {children}
           </span>
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-blue-500/5 transition-all duration-500" />
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-blue-500/10 group-hover:via-purple-500/10 group-hover:to-blue-500/10 transition-all duration-500" />
         </a>
       </div>
     </div>
@@ -228,7 +229,7 @@ const ModernHeader: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-white/60 dark:bg-gray-900/60 border-b border-white/20 dark:border-gray-700/20 shadow-xl shadow-black/5">
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/60 border-b border-slate-700/50 shadow-xl shadow-black/20">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -237,10 +238,10 @@ const ModernHeader: React.FC = () => {
               href="/" 
               className="group relative text-2xl font-bold transition-all duration-500"
             >
-              <span className="bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-purple-600 dark:group-hover:from-blue-400 dark:group-hover:to-purple-400 transition-all duration-500">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:via-purple-400 group-hover:to-cyan-300 transition-all duration-500">
                 Muhammad Hariz Albaari
               </span>
-              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-500" />
+              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 group-hover:w-full transition-all duration-500" />
             </Link>
           </div>
 

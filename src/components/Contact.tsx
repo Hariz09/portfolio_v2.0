@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef, JSX, Suspense } from 'react';
 import { Canvas, useFrame, useLoader, ThreeElements } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import { Mail, Linkedin, Github, Send, MessageCircle, Sparkles, Star, Rocket, Phone, Globe, Zap, Satellite } from 'lucide-react';
+import { Mail, Linkedin, Github, Send, MessageCircle, Star, Rocket, Phone, Globe, Zap, Satellite } from 'lucide-react';
+import StarryBackground from './StarryBackground';
 
 // Earth Component
 type MeshProps = ThreeElements['mesh'];
@@ -48,23 +49,6 @@ function EarthCanvas() {
   );
 }
 
-// Types
-interface ShootingStar {
-  id: number;
-  startX: number;
-  startY: number;
-  isVisible: boolean;
-}
-
-interface StaticStar {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  opacity: number;
-  twinkle: boolean;
-}
-
 interface ContactInfo {
   icon: JSX.Element;
   label: string;
@@ -74,8 +58,6 @@ interface ContactInfo {
 }
 
 export default function Contact(): JSX.Element {
-  const [shootingStars, setShootingStars] = useState<ShootingStar[]>([]);
-  const [staticStars, setStaticStars] = useState<StaticStar[]>([]);
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(false);
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
   const [isContactInfoVisible, setIsContactInfoVisible] = useState<boolean>(false);
@@ -124,42 +106,6 @@ export default function Contact(): JSX.Element {
       color: 'from-emerald-400 to-teal-500'
     }
   ];
-
-  useEffect(() => {
-    // Generate stars
-    const stars = Array.from({ length: 200 }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 2 + 1,
-      opacity: Math.random() * 0.8 + 0.2,
-      twinkle: Math.random() > 0.6,
-    }));
-
-    setStaticStars(stars);
-
-    // Shooting stars animation
-    const shootingStarInterval = setInterval(() => {
-      const newStar: ShootingStar = {
-        id: Date.now(),
-        startX: Math.random() * 100,
-        startY: Math.random() * 50,
-        isVisible: true,
-      };
-
-      setShootingStars((prev) => [...prev, newStar]);
-
-      setTimeout(() => {
-        setShootingStars((prev) =>
-          prev.filter((star) => star.id !== newStar.id)
-        );
-      }, 2000);
-    }, 3000);
-
-    return () => {
-      clearInterval(shootingStarInterval);
-    };
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -220,66 +166,9 @@ export default function Contact(): JSX.Element {
   };
 
   return (
-    <section id="contact" className="min-h-screen relative overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-indigo-900">
-      {/* Enhanced Stars Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        {staticStars.map((star) => (
-          <div
-            key={star.id}
-            className={`absolute bg-white rounded-full ${
-              star.twinkle ? "animate-pulse" : ""
-            }`}
-            style={{
-              left: `${star.x}%`,
-              top: `${star.y}%`,
-              width: `${star.size}px`,
-              height: `${star.size}px`,
-              opacity: star.opacity,
-              animationDuration: star.twinkle
-                ? `${Math.random() * 3 + 2}s`
-                : "none",
-              boxShadow: star.size > 1.5 ? '0 0 6px rgba(255,255,255,0.6)' : 'none'
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Enhanced Shooting Stars */}
-      <div className="absolute inset-0 pointer-events-none">
-        {shootingStars.map((star) => (
-          <div
-            key={star.id}
-            className="absolute"
-            style={{
-              left: `${star.startX}%`,
-              top: `${star.startY}%`,
-            }}
-          >
-            {star.isVisible && (
-              <div className="animate-shooting">
-                <div className="w-2 h-2 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"></div>
-                <div className="absolute top-0 left-0 w-32 h-0.5 bg-gradient-to-r from-cyan-400 via-blue-400 to-transparent origin-left transform -rotate-45"></div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Floating Particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 50 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${Math.random() * 20 + 10}s`
-            }}
-          />
-        ))}
-      </div>
+    <section id="contact" className="min-h-screen relative overflow-hidden">
+      <StarryBackground
+      backgroundColor='bg-gradient-to-b from-gray-900 via-blue-900 to-indigo-900'/>
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-6 py-20">
@@ -315,7 +204,7 @@ export default function Contact(): JSX.Element {
                 </div>
               </div>
 
-              {/* 3D Earth */}
+              {/* 3D Earth - Simplified */}
               <div 
                 ref={earthRef}
                 className={`w-64 h-64 transition-all duration-1000 ${
@@ -326,13 +215,6 @@ export default function Contact(): JSX.Element {
               >
                 <div className="relative w-full h-full">
                   <EarthCanvas />
-                  {/* Orbital rings */}
-                  <div className="absolute inset-0 border-2 border-cyan-400/20 rounded-full animate-spin" style={{ animationDuration: '20s' }}></div>
-                  <div className="absolute inset-4 border border-purple-400/20 rounded-full animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }}></div>
-                  
-                  {/* Floating satellites */}
-                  <div className="absolute top-8 right-8 w-3 h-3 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50 animate-bounce"></div>
-                  <div className="absolute bottom-12 left-6 w-2 h-2 bg-purple-400 rounded-full shadow-lg shadow-purple-400/50 animate-pulse"></div>
                 </div>
               </div>
             </div>
@@ -529,11 +411,9 @@ export default function Contact(): JSX.Element {
         <div className="text-center mt-20">
           <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-8 max-w-4xl mx-auto shadow-2xl">
             <div className="flex items-center justify-center gap-4 mb-4">
-              <Globe className="w-8 h-8 text-cyan-400 animate-spin" style={{ animationDuration: '10s' }} />
               <p className="text-sky-100 text-xl italic">
-                &quot;The universe is not only queerer than we suppose, but queerer than we can suppose. Let&apos;s explore it together.&quot;
+                &quot;The best way to predict future is to create it together.&quot;
               </p>
-              <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
             </div>
             <div className="flex items-center justify-center gap-2">
               <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-cyan-400"></div>
@@ -543,55 +423,6 @@ export default function Contact(): JSX.Element {
           </div>
         </div>
       </div>
-
-      {/* Enhanced Custom Animations */}
-      <style jsx>{`
-        @keyframes shooting {
-          0% {
-            transform: translateX(0) translateY(0) scale(0);
-            opacity: 0;
-          }
-          10% {
-            transform: translateX(0) translateY(0) scale(1);
-            opacity: 1;
-          }
-          90% {
-            transform: translateX(-600px) translateY(600px) scale(1);
-            opacity: 0.3;
-          }
-          100% {
-            transform: translateX(-800px) translateY(800px) scale(0);
-            opacity: 0;
-          }
-        }
-
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px) rotate(0deg);
-            opacity: 0.3;
-          }
-          50% {
-            transform: translateY(-20px) rotate(180deg);
-            opacity: 0.8;
-          }
-        }
-
-        .animate-shooting {
-          animation: shooting 2s ease-out forwards;
-        }
-
-        .animate-float {
-          animation: float linear infinite;
-        }
-
-        .bg-size-200 {
-          background-size: 200% 200%;
-        }
-        
-        .bg-pos-100 {
-          background-position: 100% 0;
-        }
-      `}</style>
     </section>
   );
 }
