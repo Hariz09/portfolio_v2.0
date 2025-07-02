@@ -129,7 +129,7 @@ export const aboutData: AboutData = {
     { 
       name: 'AWS & Cloud Services', 
       level: 'Beginner', 
-      icon: 'logos:aws', 
+      icon: 'skill-icons:aws-dark', 
       category: 'devops',
       description: "Experience with cloud infrastructure, deployment, and management using AWS services and modern DevOps practices.",
       subSkills: [
@@ -153,6 +153,8 @@ export const aboutData: AboutData = {
     { name: 'React', icon: 'logos:react', category: 'frontend' },
     { name: 'Next.js', icon: 'logos:nextjs-icon', category: 'frontend' },
     { name: 'TypeScript', icon: 'logos:typescript-icon', category: 'frontend' },
+    { name: 'Flutter', icon: 'devicon:flutter', category: 'frontend' },
+    { name: 'Dart', icon: 'logos:dart', category: 'frontend' },
     { name: 'Tailwind CSS', icon: 'logos:tailwindcss-icon', category: 'frontend' },
     
     { name: 'Node.js', icon: 'logos:nodejs-icon', category: 'backend' },
@@ -175,6 +177,8 @@ export const aboutData: AboutData = {
     { name: 'Canva', icon: 'devicon:canva', category: 'design'},
     { name: "Shadcn", icon: 'simple-icons:shadcnui', category: 'design'},
 
+    { name: 'Replit', icon: 'devicon:replit', category: 'others'},
+    { name: 'Docusaurus', icon: 'logos:docusaurus', category: 'others'},
     { name: 'C++', icon: 'simple-icons:cplusplus', category: 'others'},
     { name: 'C#', icon: 'arcticons:csharp', category: 'others'},
     { name: 'Java', icon: 'logos:java', category: 'others'},
@@ -198,9 +202,25 @@ export const academicData = {
       id: 1,
       name: "The Complete SQL Bootcamp",
       issuer: "Udemy",
-      date: "2023",
+      date: "2025",
       credentialUrl: "https://ude.my/UC-aa84fd8c-5cb2-4fc8-be90-bfa36d6c7e94",
       icon: "logos:udemy-icon",
+    },
+    {
+      id: 2,
+      name: "Python Introduction",
+      issuer: "Udemy",
+      date: "2024",
+      credentialUrl: "https://www.udemy.com/certificate/UC-3d579acc-4377-4189-856d-f5536c9bcefe/",
+      icon: "logos:udemy-icon",
+    },
+    {
+      id: 3,
+      name: "Foundations: Data, Data, Everywhere",
+      issuer: "Google",
+      date: "2023",
+      credentialUrl: "https://www.coursera.org/account/accomplishments/certificate/C8EHCR67SU9Q",
+      icon: "devicon:google",
     },
   ] as Certification[]
 };

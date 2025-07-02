@@ -8,7 +8,7 @@ import { Project, Technology } from "@/types/project";
 
 const ProjectsSection: React.FC = () => {
   return (
-    <section className="relative min-h-screen py-20 overflow-hidden">
+    <section id="projects" className="relative min-h-screen py-20 overflow-hidden">
       {/* Cosmic decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-4 h-4 bg-cyan-400 rounded-full animate-pulse opacity-60"></div>
@@ -55,13 +55,13 @@ const ProjectsSection: React.FC = () => {
                     {/* Project Header */}
                     <div className="flex items-start gap-6 mb-8">
                       <div className="relative">
-                        <div className="p-4 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center">
+                        <div className="p-0 flex items-center justify-center">
                           <Image
-                            src={project.iconPath}
-                            alt={`${project.title} icon`}
-                            width={48}
-                            height={48}
-                            className="object-contain"
+                          src={project.iconPath}
+                          alt={`${project.title} icon`}
+                          width={72}
+                          height={72}
+                          className="object-contain"
                           />
                         </div>
                       </div>

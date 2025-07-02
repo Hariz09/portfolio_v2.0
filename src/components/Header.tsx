@@ -176,8 +176,8 @@ const MovingBorderButton: React.FC<MovingBorderButtonProps> = ({
             className="opacity-100"
           />
         )}
-        <a
-          href={href}
+        <Link
+          href={href ?? "#"}
           onClick={handleClick}
           className={`
             relative flex items-center justify-center px-6 py-3 rounded-xl
@@ -198,7 +198,7 @@ const MovingBorderButton: React.FC<MovingBorderButtonProps> = ({
             {children}
           </span>
           <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-blue-500/10 group-hover:via-purple-500/10 group-hover:to-blue-500/10 transition-all duration-500" />
-        </a>
+        </Link>
       </div>
     </div>
   );
