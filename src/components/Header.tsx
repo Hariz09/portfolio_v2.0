@@ -33,32 +33,76 @@ const MovingBorder: React.FC<MovingBorderProps> = ({
   className = "" 
 }) => {
   const pathRef = useRef<SVGRectElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState<number>(0);
   const [pathLength, setPathLength] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const updatePathLength = () => {
-      if (pathRef.current) {
-        try {
-          const length = pathRef.current.getTotalLength();
-          setPathLength(length);
-        } catch (error) {
-          // Fallback calculation for rect perimeter
-          const rect = pathRef.current.getBoundingClientRect();
-          const perimeter = 2 * (rect.width + rect.height);
-          setPathLength(perimeter);
-          console.log(error)
+      if (!pathRef.current || !containerRef.current) return;
+
+      // Check if element is visible and has dimensions
+      const containerRect = containerRef.current.getBoundingClientRect();
+      if (containerRect.width === 0 || containerRect.height === 0) {
+        // Retry after a short delay if container has no dimensions
+        setTimeout(updatePathLength, 50);
+        return;
+      }
+
+      try {
+        // Check if the SVG element is properly rendered
+        const svgElement = pathRef.current.closest('svg');
+        if (!svgElement || !svgElement.isConnected) {
+          setTimeout(updatePathLength, 50);
+          return;
         }
+
+        const length = pathRef.current.getTotalLength();
+        setPathLength(length);
+        setIsVisible(true);
+      } catch (error) {
+        console.warn('SVG getTotalLength failed, using fallback calculation:', error);
+        
+        // Fallback calculation using container dimensions
+        const rect = containerRect;
+        const perimeter = 2 * (rect.width + rect.height);
+        setPathLength(perimeter);
+        setIsVisible(true);
       }
     };
 
-    // Wait for the element to be rendered
-    const timer = setTimeout(updatePathLength, 0);
-    return () => clearTimeout(timer);
+    // Use intersection observer to detect when element becomes visible
+    let observer: IntersectionObserver | null = null;
+    
+    if (containerRef.current) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Element is visible, try to calculate path length
+              setTimeout(updatePathLength, 0);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(containerRef.current);
+    }
+
+    // Also try immediately and after a short delay
+    updatePathLength();
+    const timeoutId = setTimeout(updatePathLength, 100);
+
+    return () => {
+      if (observer) observer.disconnect();
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   useEffect(() => {
-    if (!pathLength) return;
+    if (!pathLength || !isVisible) return;
 
     let animationId: number;
     let startTime: number | null = null;
@@ -75,17 +119,18 @@ const MovingBorder: React.FC<MovingBorderProps> = ({
 
     animationId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationId);
-  }, [duration, pathLength]);
+  }, [duration, pathLength, isVisible]);
 
   const getPoint = useCallback((): Point => {
-    if (!pathRef.current || !pathLength) return { x: 0, y: 0 };
+    if (!pathRef.current || !pathLength || !containerRef.current) return { x: 0, y: 0 };
     
     try {
       return pathRef.current.getPointAtLength(progress);
     } catch (error) {
-      console.log(error)
+      console.warn('getPointAtLength failed, using fallback:', error);
+      
       // Fallback calculation for rect path
-      const rect = pathRef.current.getBoundingClientRect();
+      const rect = containerRef.current.getBoundingClientRect();
       const w = rect.width;
       const h = rect.height;
       const perimeter = 2 * (w + h);
@@ -109,8 +154,33 @@ const MovingBorder: React.FC<MovingBorderProps> = ({
 
   const point = getPoint();
 
+  // Don't render the moving dot until we have valid dimensions
+  if (!isVisible || !pathLength) {
+    return (
+      <div ref={containerRef} className="absolute inset-0 overflow-hidden rounded-xl">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          className="absolute h-full w-full"
+          width="100%"
+          height="100%"
+        >
+          <rect
+            fill="none"
+            stroke="none"
+            width="100%"
+            height="100%"
+            rx="12"
+            ry="12"
+            ref={pathRef}
+          />
+        </svg>
+      </div>
+    );
+  }
+
   return (
-    <div className="absolute inset-0 overflow-hidden rounded-xl">
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden rounded-xl">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"
@@ -129,13 +199,14 @@ const MovingBorder: React.FC<MovingBorderProps> = ({
         />
       </svg>
       <div
-        className={`absolute w-6 h-6 rounded-full ${className}`}
+        className={`absolute w-6 h-6 rounded-full transition-opacity duration-300 ${className}`}
         style={{
           left: `${point.x}px`,
           top: `${point.y}px`,
           transform: 'translate(-50%, -50%)',
           background: 'radial-gradient(circle, rgba(96, 165, 250, 0.8) 0%, rgba(147, 51, 234, 0.8) 50%, transparent 70%)',
           boxShadow: '0 0 20px rgba(96, 165, 250, 0.6), 0 0 40px rgba(147, 51, 234, 0.4)',
+          opacity: isVisible ? 1 : 0,
         }}
       />
     </div>
@@ -261,7 +332,7 @@ const ModernHeader: React.FC = () => {
             </div>
           </div>
 
-          {/* Mobile Menu Button - Made Smaller */}
+          {/* Mobile Menu Button */}
           <div className="lg:hidden">
             <button
               onClick={toggleMobileMenu}
