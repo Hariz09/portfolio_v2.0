@@ -26,7 +26,7 @@ export default function Hero(): JSX.Element {
   const currentStatus = statusOptions[currentStatusIndex];
 
   return (
-    <section className="min-h-screen relative overflow-hidden py-20">
+    <section className="min-h-screen relative overflow-hidden">
       
       {/* Main content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
