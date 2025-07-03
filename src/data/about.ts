@@ -16,28 +16,60 @@ export const aboutData: AboutData = {
       level: 'Expert', 
       icon: 'mdi:code-tags',
       category: 'others',
-      description: "I've been doing competitive programming for 3 years and completed 1000+ problem sets, achieving Specialist rating on Codeforces with consistent performance in contests.",
+      description: "I've been doing competitive programming for 3 years and completed 1000+ problem sets, achieving Expert rating on Codeforces with consistent performance in contests.",
       subSkills: [
-        { name: 'Data Structures (Arrays, Linked Lists, Stacks, Queues)', level: 'Advanced' },
-        { name: 'Advanced Data Structures (Trees, Heaps, Hash Tables)', level: 'Intermediate' },
-        { name: 'Graph Algorithms (DFS, BFS, Shortest Path)', level: 'Advanced' },
-        { name: 'Dynamic Programming', level: 'Advanced' },
-        { name: 'Greedy Algorithms', level: 'Advanced' },
-        { name: 'Binary Search & Two Pointers', level: 'Advanced' },
-        { name: 'Sorting & Searching Algorithms', level: 'Advanced' },
-        { name: 'Contest Strategy & Time Management', level: 'Advanced' },
-        { name: 'String Algorithms & Pattern Matching', level: 'Intermediate' },
-        { name: 'Number Theory & Mathematical Algorithms', level: 'Beginner' },
-        { name: 'Combinatorics & Probability', level: 'Beginner' },
-        { name: 'Segment Trees & Fenwick Trees', level: 'Beginner' },
+    { name: 'Data Structures (Arrays, Linked Lists, Stacks, Queues)', level: 'Expert' },
+    { name: 'Greedy Algorithms', level: 'Expert' },
+    { name: 'Binary Search & Two Pointers', level: 'Expert' },
+    { name: 'Sorting & Searching Algorithms', level: 'Expert' },
+    { name: 'Contest Strategy & Time Management', level: 'Expert' },
+    { name: 'Advanced Data Structures (Trees, Heaps, Hash Tables)', level: 'Advanced' },
+    { name: 'Graph Algorithms (DFS, BFS, Shortest Path)', level: 'Advanced' },
+    { name: 'Dynamic Programming', level: 'Advanced' },
+    { name: 'String Algorithms & Pattern Matching', level: 'Advanced' },
+    { name: 'Number Theory & Mathematical Algorithms', level: 'Intermediate' },
+    { name: 'Combinatorics & Probability', level: 'Intermediate' },
+    { name: 'Segment Trees & Fenwick Trees', level: 'Intermediate' },
+    { name: 'Advanced Graph Algorithms (MST, Strongly Connected Components)', level: 'Intermediate' },
+    { name: 'Range Query Data Structures', level: 'Intermediate' },
+    { name: 'Game Theory & Nim', level: 'Beginner' },
       ],
       experience: [
-        'Achieved Specialist rating (1400+) on Codeforces',
+        'Achieved Expert rating (1600+) on Codeforces',
         'Solved 1000+ problems across various platforms',
-        'Participated in 21 contests',
+        'Participated in 20+ contests',
         'Mentored junior programmers in algorithmic problem solving'
       ],
       relatedTech: ['C++', 'Python', 'Java', 'Algorithms', 'Data Structures']
+    },
+    {
+      name: 'Next.js Development',
+      level: 'Advanced',
+      icon: 'logos:nextjs-icon',
+      category: 'frontend',
+      description: "Expert-level full-stack React framework development with deep expertise in performance optimization, advanced rendering patterns, and production-scale application architecture.",
+      subSkills: [
+        { name: 'App Router & Server Components', level: 'Advanced' },
+        { name: 'Route Handlers & Custom Middleware', level: 'Advanced' },
+        { name: 'SSR/SSG/ISR Implementation', level: 'Advanced' },
+        { name: 'Next.js Performance Optimization', level: 'Advanced' },
+        { name: 'Middleware & Edge Functions', level: 'Advanced' },
+        { name: 'Vercel Deployment & CI/CD', level: 'Intermediate' },
+        { name: 'Server Actions & Forms', level: 'Intermediate' },
+        { name: 'Authentication Integration (NextAuth)', level: 'Beginner' },
+        { name: 'API Routes Development', level: 'Beginner' },
+      ],
+      experience: [
+        'Implemented advanced server-side rendering with ISR for optimal performance',
+        'Optimized Core Web Vitals achieving 95+ Lighthouse scores consistently',
+        'Developed custom middleware for authentication and rate limiting',
+        'Built real-time applications using Server Components and Streaming',
+      ],
+      relatedTech: [
+        'React', 'TypeScript', 'Vercel', 'Tailwind CSS', 
+        'Prisma', 'NextAuth.js', 'Framer Motion', 'Zustand',
+        'React Query', 'Zod', 'PostgreSQL'
+      ]
     },
     {
       name: 'React & Next.js', 
@@ -103,28 +135,6 @@ export const aboutData: AboutData = {
         'Built applications using Supabase as backend-as-a-service',
       ],
       relatedTech: ['PostgreSQL', 'Redis', 'Supabase', 'SQL', 'Prisma']
-    },
-    {
-      name: 'Next.js Development',
-      level: 'Intermediate',
-      icon: 'logos:nextjs-icon',
-      category: 'frontend',
-      description: "Full-stack React framework development with focus on performance optimization and modern web development patterns.",
-      subSkills: [
-        { name: 'App Router & Server Components', level: 'Intermediate' },
-        { name: 'API Routes Development', level: 'Intermediate' },
-        { name: 'SSR/SSG Implementation', level: 'Intermediate' },
-        { name: 'Next.js Performance Optimization', level: 'Intermediate' },
-        { name: 'Middleware & Edge Functions', level: 'Beginner' },
-        { name: 'Vercel Deployment', level: 'Intermediate' }
-      ],
-      experience: [
-        'Built full-stack applications using Next.js App Router',
-        'Implemented server-side rendering for improved SEO',
-        'Created API endpoints with Next.js API routes',
-        'Optimized performance with code splitting and lazy loading'
-      ],
-      relatedTech: ['React', 'TypeScript', 'Vercel', 'Tailwind CSS']
     },
     { 
       name: 'AWS & Cloud Services', 
