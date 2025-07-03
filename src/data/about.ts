@@ -13,7 +13,7 @@ export const aboutData: AboutData = {
   skills: [
     { 
       name: 'Competitive Programming', 
-      level: 'Advanced', 
+      level: 'Expert', 
       icon: 'mdi:code-tags',
       category: 'others',
       description: "I've been doing competitive programming for 3 years and completed 1000+ problem sets, achieving Specialist rating on Codeforces with consistent performance in contests.",
